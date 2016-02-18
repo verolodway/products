@@ -67,8 +67,16 @@ public class StockManager
      * @return The quantity of the given product in stock.
      */
     public int numberInStock(int id)
-    {
-        return 0;
+    { 
+        Iterator<Product> produ = stock.iterator();
+        int ident = 0;
+        while (produ.hasNext()){
+            Product stock = produ.next();
+            if (stock.getID() == (id)){
+                ident = stock.getQuantity();
+            }
+        }
+        return ident;
     }
 
     /**
