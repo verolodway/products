@@ -12,13 +12,15 @@ public class StockManager
 {
     // A list of the products.
     private ArrayList<Product> stock;
-
+    // Cantidad de productos en el stock
+    private int cantidad;
     /**
      * Initialise the stock manager.
      */
     public StockManager()
     {
         stock = new ArrayList<Product>();
+        int cantidad = 0;
     }
 
     /**
@@ -31,14 +33,23 @@ public class StockManager
     }
 
     /**
-     * Receive a delivery of a particular product.
+     * Receive a delivery (entrega, distribucion, presentacion) of a particular product.
      * Increase the quantity of the product by the given amount.
      * @param id The ID of the product.
      * @param amount The amount to increase the quantity by.
      */
     public void delivery(int id, int amount)
     {
-        
+        Iterator<Product> produ = stock.iterator();
+        while (produ.hasNext()){
+            Product stock = produ.next();
+            if(stock.getID() == id){
+                cantidad = stock.getQuantity()+ amount;
+            }
+            else{
+                cantidad = 0;
+            }
+        }
     }
 
     /**
@@ -52,7 +63,7 @@ public class StockManager
         Iterator<Product> prod = stock.iterator();
         while (prod.hasNext()){
             Product stock = prod.next();
-            if (stock.getID() == (id)){
+            if (stock.getID() == id){
                 productoEncontrado = stock;
             }
         }
@@ -69,14 +80,14 @@ public class StockManager
     public int numberInStock(int id)
     { 
         Iterator<Product> produ = stock.iterator();
-        int ident = 0;
+        int cantidad = 0;
         while (produ.hasNext()){
             Product stock = produ.next();
-            if (stock.getID() == (id)){
-                ident = stock.getQuantity();
+            if (stock.getID() == id){
+                cantidad = stock.getQuantity();
             }
         }
-        return ident;
+        return cantidad;
     }
 
     /**
