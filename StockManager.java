@@ -99,4 +99,16 @@ public class StockManager
             System.out.println(stock);
         }
     }
+
+    /**
+     * Método que imprime por pantalla los objetos que están por debajo de un stock determinado por parámetro.
+     */
+    public void underGivenNumberStock(int numeroDeStock){
+        for(Product produc : stock){
+            produc.getQuantity();
+            if (produc.getQuantity() < numeroDeStock){
+                System.out.println(produc);
+            }   
+        }
+    }
 }
