@@ -29,7 +29,15 @@ public class StockManager
      */
     public void addProduct(Product item)
     {
-        stock.add(item);
+        for (Product prod : stock){
+            prod.getID();
+            if(prod.getID() == item.getID()){
+                System.out.println("Este ID ya pertenece a un producto.");
+            }
+            else{
+                stock.add(item);
+            }
+        }
     }
 
     /**
