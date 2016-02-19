@@ -1,6 +1,4 @@
 import java.util.ArrayList;
-import java.util.Iterator;
-
 /**
  * Manage the stock in a business.
  * The stock is described by zero or more Products.
@@ -12,8 +10,6 @@ public class StockManager
 {
     // A list of the products.
     private ArrayList<Product> stock;
-    // Cantidad de productos en el stock
-    private int cantidad;
     /**
      * Initialise the stock manager.
      */
@@ -48,15 +44,13 @@ public class StockManager
      */
     public void delivery(int id, int amount)
     {
-        Iterator<Product> produ = stock.iterator();
-        while (produ.hasNext()){
-            Product stock = produ.next();
-            if(stock.getID() == id){
-                cantidad = stock.getQuantity()+ amount;
-            }
-            else{
-                cantidad = 0;
-            }
+        Product producto = findProduct(id);
+        if(producto != null) {
+            producto.increaseQuantity(amount);
+        }
+        else
+        {
+            System.out.println("El ID introducido no se corresponde con ningun producto.");
         }
     }
 
@@ -67,15 +61,19 @@ public class StockManager
      */
     public Product findProduct(int id)
     {
-        Product productoEncontrado = null;
-        Iterator<Product> prod = stock.iterator();
-        while (prod.hasNext()){
-            Product stock = prod.next();
-            if (stock.getID() == id){
-                productoEncontrado = stock;
+        Product producto = null;
+        boolean encontrado = false;
+        int cont = 0;
+        while(cont < stock.size() && !encontrado)
+        {
+            if (stock.get(cont).getID() == id)
+            {
+                producto = stock.get(cont);
+                encontrado = true;
             }
+            cont++;
         }
-        return productoEncontrado;
+        return producto;
     }
 
     /**
@@ -87,15 +85,12 @@ public class StockManager
      */
     public int numberInStock(int id)
     { 
-        Iterator<Product> produ = stock.iterator();
-        int cantidad = 0;
-        while (produ.hasNext()){
-            Product stock = produ.next();
-            if (stock.getID() == id){
-                cantidad = stock.getQuantity();
-            }
-        }
-        return cantidad;
+        Product producto = findProduct(id);
+        int stockDelItem = 0;
+        if(producto != null) {
+            stockDelItem = producto.getQuantity();
+        } 
+        return stockDelItem;
     }
 
     /**
@@ -115,8 +110,27 @@ public class StockManager
         for(Product produc : stock){
             produc.getQuantity();
             if (produc.getQuantity() < numeroDeStock){
-                System.out.println(produc);
+                System.out.println(produc.toString());
             }   
         }
+    }
+    
+    /**
+     * Método que nos permite encontrar un producto por su nombre
+     */
+    public Product findProduct(String name){
+        Product producto = null;
+        boolean encontrado = false;
+        int cont = 0;
+        while(cont < stock.size() && !encontrado)
+        {
+            if (stock.get(cont).getName() == name)
+            {
+                producto = stock.get(cont);
+                encontrado = true;
+            }
+            cont++;
+        }
+        return producto;
     }
 }
